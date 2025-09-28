@@ -180,10 +180,10 @@ anchor_left = 0.5
 anchor_top = 0.494
 anchor_right = 0.5
 anchor_bottom = 0.494
-offset_left = -304.0
-offset_top = -312.112
-offset_right = 304.0
-offset_bottom = -8.112
+offset_left = -320.0
+offset_top = -312.016
+offset_right = 320.0
+offset_bottom = -8.01599
 mouse_filter = 2
 stretch = true
 
@@ -199,7 +199,7 @@ sdf_oversize = 0
 sdf_scale = 2
 positional_shadow_atlas_size = 0
 positional_shadow_atlas_16_bits = false
-size = Vector2i(608, 304)
+size = Vector2i(640, 304)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="CanvasLayer/Panel/SubViewportContainer/SubViewport"]
