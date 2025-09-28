@@ -1,3 +1,4 @@
+using System;
 using System.Xml;
 using Godot;
 public partial class GamePlayer : CharacterBody3D
@@ -19,30 +20,60 @@ public partial class GamePlayer : CharacterBody3D
     [Export] public RichTextLabel Chat;
     [Export] public LineEdit Text;
     [Export] public bool FocusTester = false;
+    [Export] public Button FocusTesterButton;
     [Export] private PackedScene LeaderboardName;
     [Export] private VBoxContainer LeaderboardList;
     public const float JumpVelocity = 10.0f;
     public const float Speed = 3.5f;
+    public override void _Ready()
+    {
+        FocusTesterButton.GrabFocus();
+        FocusTester = true;
+    }
     public override void _Input(InputEvent @event)
-	{
-		if(isClient || FocusTester){
-			if (@event is InputEventMouseMotion mouseEvent)
-			{	
-				if (Input.IsActionPressed("RC") || zoom <= 0.5f)
-				{
-					Input.MouseMode = Input.MouseModeEnum.Captured;
-					Vector2 rotationAmount = mouseEvent.Relative * 2.5f;
-					xBone.RotateY(Mathf.DegToRad(-rotationAmount.X/2.75f));
-					yBone.RotateX(Mathf.DegToRad(-rotationAmount.Y/2.75f));
-				} else
-				{
-					Input.MouseMode = Input.MouseModeEnum.Visible;
-				}
-			}
-			
-		}
-	}
-
+    {
+        if (isClient || FocusTester)
+        {
+            if (@event is InputEventMouseMotion mouseEvent)
+            {
+                if (Input.IsActionPressed("RC") || zoom <= 0.5f)
+                {
+                    Input.MouseMode = Input.MouseModeEnum.Captured;
+                    Vector2 rotationAmount = mouseEvent.Relative * 2.5f;
+                    xBone.RotateY(Mathf.DegToRad(-rotationAmount.X / 2.75f));
+                    yBone.RotateX(Mathf.DegToRad(-rotationAmount.Y / 2.75f));
+                }
+                else
+                {
+                    Input.MouseMode = Input.MouseModeEnum.Visible;
+                }
+            }
+            if (Input.IsActionJustPressed("ZO") || Input.IsActionPressed("ZO1"))
+            {
+                zoom += 0.5f + (Input.IsActionJustPressed("ZO") ? 1f : 0f);
+                Plm.Visible = true;
+                if (zoom >= max_zoom)
+                {
+                    zoom = max_zoom;
+                }
+            }
+            if (Input.IsActionJustPressed("ZI") || Input.IsActionPressed("ZI1"))
+            {
+                zoom -= 0.5f + (Input.IsActionJustPressed("ZI") ? 1f : 0f);
+                if (zoom <= min_zoom)
+                {
+                    zoom = min_zoom;
+                    Plm.Visible = false;
+                }
+            }
+        }
+    }
+    public bool isStandingStill(Vector3 vel)
+    {
+        if ((Math.Abs(vel.X - Velocity.X)+Math.Abs(vel.Y - Velocity.Y)+Math.Abs(vel.Z - Velocity.Z)) > 0f)
+            return false;
+        return true;
+    }
     public override void _PhysicsProcess(double delta)
     {
         if (!isClient)
@@ -55,22 +86,6 @@ public partial class GamePlayer : CharacterBody3D
             }
         } else {
             Vector3 velocity = Velocity;
-			if ((Input.IsActionJustPressed("ZO") || Input.IsActionPressed("ZO1")) && FocusTester)
-			{
-				zoom += 0.5f + (Input.IsActionJustPressed("ZO") ? 1f : 0f);
-				if (zoom >= max_zoom)
-				{
-					zoom = max_zoom;
-				}
-			}
-			if ((Input.IsActionJustPressed("ZI") || Input.IsActionPressed("ZI1")) && FocusTester)
-			{
-				zoom -= 0.5f + (Input.IsActionJustPressed("ZI") ? 1f : 0f);
-				if (zoom <= min_zoom)
-				{
-					zoom = min_zoom;
-				}
-			}
             Vector3 sigma = Camera.Position;
 			sigma.Z = Mathf.Lerp(Camera.Position.Z, zoom, 0.15f); 
 			Camera.Position = sigma;
@@ -108,7 +123,12 @@ public partial class GamePlayer : CharacterBody3D
                 Vector3 flatDir = new Vector3(direction.X, 0, direction.Z).Normalized();
                 Transform3D t = GlobalTransform;
                 t.Basis = Basis.LookingAt(flatDir, Vector3.Up);
-                GlobalTransform = t;
+                if (FocusTester)
+                    Plm.GlobalTransform = t;
+            }
+            if (zoom == min_zoom)
+            {
+                Plm.GlobalRotation = xBone.Rotation;
             }
             velocity.X *= 0.75f;
 			velocity.Z *= 0.75f;

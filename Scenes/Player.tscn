@@ -7,7 +7,10 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qbkls"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpqav"]
+[sub_resource type="BoxMesh" id="BoxMesh_dewec"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ixxa"]
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gntrk"]
 
@@ -31,14 +34,12 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_miouo"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_dewec"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpqav"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ixxa"]
-albedo_color = Color(0, 0, 0, 1)
-
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Camera", "Label", "xBone", "yBone", "PollingRate", "UI", "Chat", "Text", "LeaderboardList")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Camera", "Plm", "Label", "xBone", "yBone", "PollingRate", "UI", "Chat", "Text", "FocusTesterButton", "LeaderboardList")]
 script = ExtResource("1_v0iea")
 Camera = NodePath("x/y/Camera3D")
+Plm = NodePath("MeshInstance3D")
 Label = NodePath("Name")
 xBone = NodePath("x")
 yBone = NodePath("x/y")
@@ -46,14 +47,19 @@ PollingRate = NodePath("Timer")
 UI = NodePath("CanvasLayer")
 Chat = NodePath("CanvasLayer/Panel/RichTextLabel")
 Text = NodePath("CanvasLayer/Panel/LineEdit")
+FocusTesterButton = NodePath("CanvasLayer/FocusTester")
 LeaderboardName = ExtResource("2_dewec")
 LeaderboardList = NodePath("CanvasLayer/VBoxContainer")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("CapsuleMesh_qbkls")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_rpqav")
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 0.380071, 0, 0.522336, -0.341702)
+mesh = SubResource("BoxMesh_dewec")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_5ixxa")
 
 [node name="Name" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
@@ -65,7 +71,7 @@ font_size = 45
 outline_size = 20
 
 [node name="x" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 
 [node name="y" type="Node3D" parent="x"]
 
@@ -134,10 +140,8 @@ offset_top = 4.0
 offset_bottom = 441.0
 grow_horizontal = 0
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 0.380071, 0, 0.522336, -0.341702)
-mesh = SubResource("BoxMesh_dewec")
-surface_material_override/0 = SubResource("StandardMaterial3D_5ixxa")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rpqav")
 
 [connection signal="timeout" from="Timer" to="." method="Polling"]
 [connection signal="focus_entered" from="CanvasLayer/FocusTester" to="." method="FE"]

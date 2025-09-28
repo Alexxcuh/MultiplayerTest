@@ -68,7 +68,10 @@ public partial class Multiplayer : Control
                     {
                         b.rot = new Vector3(Rot.x, Rot.y, Rot.z);
                         b.pos = new Vector3(Pos.x, Pos.y, Pos.z);
-                    } else {
+                    }
+                    else
+                    {
+                        GD.Print("hmmm");
                         var e = Player.Instantiate<GamePlayer>();
                         e.Name = Movement.id.ToString();
                         LocalWorld.CallDeferred("add_child", e);
@@ -76,7 +79,8 @@ public partial class Multiplayer : Control
                         players[Movement.id] = e;
                         e.rot = new Vector3(Rot.x, Rot.y, Rot.z);
                         e.pos = new Vector3(Pos.x, Pos.y, Pos.z);
-                        LocalPlayer.CallDeferred("AddPlayerLeaderBoard",e.Name);
+                        LocalPlayer.CallDeferred("AddPlayerLeaderBoard", e.Name);
+                        e.Plm.Visible = true;
                     }
                     break;
                 case "chat":
