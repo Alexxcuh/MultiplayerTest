@@ -1,0 +1,40 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://c2srnhsvh8wt5"]
+
+[ext_resource type="FontFile" uid="uid://dy3e6rotqbl3n" path="res://Fonts/ArchivoBlack.ttf" id="1_yd3fu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yd3fu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_23v3e"]
+bg_color = Color(0, 0, 0, 0.498039)
+corner_radius_top_left = 11
+corner_radius_top_right = 11
+corner_radius_bottom_right = 11
+corner_radius_bottom_left = 11
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_23v3e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k1aya"]
+bg_color = Color(0, 0, 0, 0.498039)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k1aya"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j4jqe"]
+
+[resource]
+default_font = ExtResource("1_yd3fu")
+LineEdit/font_sizes/font_size = 13
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_yd3fu")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_23v3e")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_23v3e")
+Panel/styles/panel = SubResource("StyleBoxFlat_k1aya")
+RichTextLabel/font_sizes/normal_font_size = 13
+RichTextLabel/styles/focus = SubResource("StyleBoxEmpty_k1aya")
+RichTextLabel/styles/normal = SubResource("StyleBoxEmpty_j4jqe")

@@ -1,0 +1,285 @@
+[gd_scene load_steps=18 format=3 uid="uid://b3xdnu0e8y76u"]
+
+[ext_resource type="Script" uid="uid://dal6cbh6l0g86" path="res://Scripts/Multiplayer.cs" id="1_eumxw"]
+[ext_resource type="PackedScene" uid="uid://bnv45wsf5yasd" path="res://Scenes/World.tscn" id="2_o33aa"]
+[ext_resource type="FontFile" uid="uid://dy3e6rotqbl3n" path="res://Fonts/ArchivoBlack.ttf" id="2_svhvw"]
+[ext_resource type="Script" uid="uid://ch6yyr8dxsqu4" path="res://Scripts/rotatee.cs" id="3_5ne1p"]
+[ext_resource type="PackedScene" uid="uid://cmrlj817y27f6" path="res://Scenes/Player.tscn" id="3_hu8py"]
+[ext_resource type="Theme" uid="uid://c2srnhsvh8wt5" path="res://Theme.tres" id="4_hu8py"]
+[ext_resource type="Texture2D" uid="uid://cgk2ncihq06ak" path="res://house.jpg" id="4_svhvw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eumxw"]
+bg_color = Color(0, 0, 0, 0.498039)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wktud"]
+bg_color = Color(1, 1, 1, 0.47451)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wuni8"]
+bg_color = Color(0, 0, 0, 0.262745)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwa7x"]
+bg_color = Color(0.180005, 0.180005, 0.180005, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_r1ube"]
+font_size = 15
+font_color = Color(1, 0.23, 0.242833, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_svhvw"]
+flip_faces = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bi2t"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("4_svhvw")
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_56a3p"]
+
+[sub_resource type="Sky" id="Sky_56a3p"]
+sky_material = SubResource("PhysicalSkyMaterial_56a3p")
+
+[sub_resource type="Environment" id="Environment_otwdb"]
+background_mode = 1
+sky = SubResource("Sky_56a3p")
+ambient_light_source = 1
+reflected_light_source = 1
+
+[node name="Multiplayer" type="Control" node_paths=PackedStringArray("Address", "MenuUI", "Warning")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eumxw")
+Address = NodePath("CanvasLayer/Panel/Panel/LineEdit")
+MenuUI = NodePath("CanvasLayer")
+Warning = NodePath("CanvasLayer/Panel/Panel/Error")
+World = ExtResource("2_o33aa")
+Player = ExtResource("3_hu8py")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+handle_input_locally = false
+scaling_3d_scale = 0.25
+texture_mipmap_bias = -2.0
+anisotropic_filtering_level = 0
+fsr_sharpness = 0.0
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.15097, 0.5)
+fov = 90.0
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_hu8py")
+theme_override_styles/panel = SubResource("StyleBoxFlat_eumxw")
+
+[node name="Panel" type="Panel" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.494
+anchor_right = 0.5
+anchor_bottom = 0.494
+offset_left = -192.0
+offset_top = -0.112
+offset_right = 192.0
+offset_bottom = 135.888
+theme_override_styles/panel = SubResource("StyleBoxFlat_wktud")
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Panel/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 368.0
+offset_bottom = 47.0
+theme_override_colors/clear_button_color_pressed = Color(1, 1, 1, 1)
+theme_override_colors/clear_button_color = Color(1, 1, 1, 1)
+theme_override_colors/selection_color = Color(1, 1, 1, 1)
+theme_override_colors/caret_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(0.589096, 0.589096, 0.589096, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/font_selected_color = Color(1, 1, 1, 1)
+theme_override_colors/font_uneditable_color = Color(1, 1, 1, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = SubResource("StyleBoxFlat_wuni8")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_wuni8")
+theme_override_styles/normal = SubResource("StyleBoxFlat_wuni8")
+text = "localhost:8080"
+placeholder_text = "Introduce Server IP Address here..."
+
+[node name="Button" type="Button" parent="CanvasLayer/Panel/Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 368.0
+offset_bottom = 120.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/focus = SubResource("StyleBoxFlat_xwa7x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xwa7x")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_xwa7x")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_xwa7x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xwa7x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xwa7x")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xwa7x")
+text = "Join"
+
+[node name="Error" type="Label" parent="CanvasLayer/Panel/Panel"]
+layout_mode = 0
+offset_left = -384.0
+offset_top = 144.0
+offset_right = 768.0
+offset_bottom = 168.0
+label_settings = SubResource("LabelSettings_r1ube")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.494
+anchor_right = 0.5
+anchor_bottom = 0.494
+offset_left = -304.0
+offset_top = -312.112
+offset_right = 304.0
+offset_bottom = -8.112
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Panel/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+scaling_3d_scale = 0.4
+texture_mipmap_bias = -2.0
+anisotropic_filtering_level = 0
+fsr_sharpness = 0.0
+gui_snap_controls_to_pixels = false
+sdf_oversize = 0
+sdf_scale = 2
+positional_shadow_atlas_size = 0
+positional_shadow_atlas_16_bits = false
+size = Vector2i(608, 304)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="CanvasLayer/Panel/SubViewportContainer/SubViewport"]
+fov = 67.0
+size = 0.6
+
+[node name="Label3D" type="Label3D" parent="CanvasLayer/Panel/SubViewportContainer/SubViewport/Camera3D" node_paths=PackedStringArray("panorama")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3)
+transparency = 0.15
+double_sided = false
+no_depth_test = true
+outline_modulate = Color(0.497474, 0.497474, 0.497474, 1)
+text = "Multiplayer Test"
+font = ExtResource("2_svhvw")
+outline_size = 25
+script = ExtResource("3_5ne1p")
+panorama = NodePath("../../../../../SubViewportContainer/SubViewport/Camera3D")
+
+[node name="Label3D" type="Label3D" parent="CanvasLayer/Panel/SubViewportContainer/SubViewport/Camera3D/Label3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+transparency = 0.15
+double_sided = false
+no_depth_test = true
+outline_modulate = Color(0.498039, 0.498039, 0.498039, 1)
+text = "i need new pc"
+font = ExtResource("2_svhvw")
+outline_size = 25
+
+[node name="Label" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.007
+anchor_top = 0.988
+anchor_right = 0.007
+anchor_bottom = 0.988
+offset_left = -0.176001
+offset_top = -16.032
+offset_right = 343.824
+offset_bottom = -1.03204
+theme_override_colors/font_color = Color(1, 1, 1, 0.498039)
+theme_override_font_sizes/font_size = 10
+text = "© 2025 Alexander. All Rights Reserved."
+vertical_alignment = 2
+autowrap_mode = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.993
+anchor_top = 0.988
+anchor_right = 0.993
+anchor_bottom = 0.988
+offset_left = -807.824
+offset_top = -19.032
+offset_right = 0.176025
+offset_bottom = -0.0320435
+text = "Version 0.0.1"
+horizontal_alignment = 2
+vertical_alignment = 2
+autowrap_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CanvasLayer"]
+transform = Transform3D(0.14727, 0.808452, 0.569839, 0.227267, -0.588365, 0.776, 0.962632, 0.0152241, -0.270383, 0, 4.15097, 0.5)
+light_bake_mode = 1
+directional_shadow_mode = 0
+directional_shadow_fade_start = 0.0
+directional_shadow_max_distance = 0.2
+directional_shadow_pancake_size = 0.0
+sky_mode = 1
+
+[node name="Node3D" type="Node3D" parent="CanvasLayer"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 4.15097, 0.5)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CanvasLayer/Node3D"]
+transform = Transform3D(0.989354, 0, 0, 0, 0.989354, 0, 0, 0, 0.989354, 0, 0, 0)
+mesh = SubResource("SphereMesh_svhvw")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_5bi2t")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="CanvasLayer"]
+environment = SubResource("Environment_otwdb")
+
+[connection signal="pressed" from="CanvasLayer/Panel/Panel/Button" to="." method="_on_button_pressed"]

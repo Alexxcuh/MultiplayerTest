@@ -1,0 +1,145 @@
+[gd_scene load_steps=20 format=3 uid="uid://cmrlj817y27f6"]
+
+[ext_resource type="Script" uid="uid://cm7p6lc51e10b" path="res://Scripts/GamePlayer.cs" id="1_v0iea"]
+[ext_resource type="PackedScene" uid="uid://j1ap1sv6ovfb" path="res://Scenes/Leaderboard.tscn" id="2_dewec"]
+[ext_resource type="FontFile" uid="uid://dy3e6rotqbl3n" path="res://Fonts/ArchivoBlack.ttf" id="2_kyqiw"]
+[ext_resource type="Theme" uid="uid://c2srnhsvh8wt5" path="res://Theme.tres" id="3_gntrk"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qbkls"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rpqav"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gntrk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dewec"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ixxa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nn08x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_52ee3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bhhdu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_megsn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yoq75"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ksbbd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_glx4g"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_miouo"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dewec"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5ixxa"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Camera", "Label", "xBone", "yBone", "PollingRate", "UI", "Chat", "Text", "LeaderboardList")]
+script = ExtResource("1_v0iea")
+Camera = NodePath("x/y/Camera3D")
+Label = NodePath("Name")
+xBone = NodePath("x")
+yBone = NodePath("x/y")
+PollingRate = NodePath("Timer")
+UI = NodePath("CanvasLayer")
+Chat = NodePath("CanvasLayer/Panel/RichTextLabel")
+Text = NodePath("CanvasLayer/Panel/LineEdit")
+LeaderboardName = ExtResource("2_dewec")
+LeaderboardList = NodePath("CanvasLayer/VBoxContainer")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_qbkls")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_rpqav")
+
+[node name="Name" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 0)
+billboard = 1
+outline_modulate = Color(0.498039, 0.498039, 0.498039, 1)
+text = "Name"
+font = ExtResource("2_kyqiw")
+font_size = 45
+outline_size = 20
+
+[node name="x" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, -0.4)
+
+[node name="y" type="Node3D" parent="x"]
+
+[node name="Camera3D" type="Camera3D" parent="x/y"]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="FocusTester" type="Button" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gntrk")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_dewec")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_5ixxa")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_nn08x")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_52ee3")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_bhhdu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_megsn")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_yoq75")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ksbbd")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_glx4g")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_miouo")
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 432.0
+offset_bottom = 304.0
+theme = ExtResource("3_gntrk")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.012
+anchor_top = 0.016
+anchor_right = 0.987
+anchor_bottom = 0.844
+offset_left = -0.32
+offset_top = -0.0960002
+offset_right = -0.320007
+offset_bottom = -0.0640106
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.875
+anchor_right = 0.975
+anchor_bottom = 0.969
+offset_top = -1.52588e-05
+offset_bottom = -0.0640106
+placeholder_text = "Type message in here."
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -224.0
+offset_top = 4.0
+offset_bottom = 441.0
+grow_horizontal = 0
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.4, 0, 0, 0, 0.380071, 0, 0.522336, -0.341702)
+mesh = SubResource("BoxMesh_dewec")
+surface_material_override/0 = SubResource("StandardMaterial3D_5ixxa")
+
+[connection signal="timeout" from="Timer" to="." method="Polling"]
+[connection signal="focus_entered" from="CanvasLayer/FocusTester" to="." method="FE"]
+[connection signal="focus_exited" from="CanvasLayer/FocusTester" to="." method="FEX"]
+[connection signal="text_submitted" from="CanvasLayer/Panel/LineEdit" to="." method="TextSubmitted"]
